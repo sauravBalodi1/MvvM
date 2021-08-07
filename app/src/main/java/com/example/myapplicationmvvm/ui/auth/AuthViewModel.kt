@@ -2,6 +2,7 @@ package com.example.myapplicationmvvm.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.myapplicationmvvm.ui.data.repo.UserRepo
 
 class AuthViewModel :ViewModel (){
     var email:String?=null//interface function are being defined in  the login activity
@@ -10,13 +11,14 @@ class AuthViewModel :ViewModel (){
 
     fun buttonClick(view: View){
         authListner?.onStarted()
+        val loginResponse=UserRepo().userLogin(email!!,password!!)
         if(email.isNullOrEmpty()||password.isNullOrEmpty())
         {
            authListner?.onFailure("invalid password or email")
             return
         }
         else {
-            authListner?.onSuccess()
+            authListner?.onSuccess(loginResponse)
         }
 
 
